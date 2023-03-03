@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>dddice CDN Example</title>
+    </head>
+    <body>
+        <header>
+            <ol>
+                <li>
+                    <button onclick={init()}>Initialize</button>
+                </li>
+                <li>
+                    <button onclick={join()}>Join Room</button>
+                </li>
+                <li>
+                    <button onclick={roll()}>Roll Dice</button>
+                </li>
+            </ol>
+        </header>
+        <canvas id="dddice" height="600" width="800"></canvas>
+
+        <script src="https://cdn.dddice.com/js/dddice-latest.js"></script>
+        <script>
+            // Canvas
+            const canvas = document.getElementById('dddice');
+
+            // ThreeDDice class
+            var dddice;
+
+            // Initialize the SDK
+            function init() {
+                const input = prompt('Enter API Key');
+                if (input) {
+                    dddice = new window.ThreeDDice(canvas, input)
+                    dddice.start();
+                }
+            }
+
+            // Join a room
+            function join() {
+                if (!dddice) {
+                    alert('dddice is not initialized');
+                }
+
+                const input = prompt('Enter Room Slug');
+                if (input) {
+                    dddice.connect(input);
+                }
+            }
+
+            // Roll dice
+            function roll() {
+                if (!dddice) {
+                    alert('dddice is not initialized');
+                }
+
+                dddice.roll([
+                    { type: 'd20', theme: 'dddice-standard' }
+                ]);
+            }
+        </script>
+    </body>
+</html>
